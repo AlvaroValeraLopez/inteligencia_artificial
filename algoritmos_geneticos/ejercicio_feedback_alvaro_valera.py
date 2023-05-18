@@ -1,12 +1,15 @@
 import random
 import numpy as np
 
+
 # Parámetros del algoritmo
 ELEMENTOS_POBLACION = 100  # Tamaño de la población
 MAX_ITERACIONES = 1000  # Número máximo de iteraciones
-CODIGO = np.array([30, 1, 50, 77, 85, 99, 2, 8, 40, 22])  # Código a encontrar
-LON_CROMOSOMA = len(CODIGO)  # Longitud del cromosoma (igual a la longitud del código)
+NUM_GENES = 30
+CODIGO = np.random.randint(1, 100, NUM_GENES)
+LON_CROMOSOMA = len(CODIGO)
 PROB_MUTACION = 0.1  # Probabilidad de mutación
+
 
 # Creación de la población inicial con cromosomas generados aleatoriamente
 def primeraGeneracion():
