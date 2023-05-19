@@ -91,6 +91,8 @@ def mutacion(poblacion):
             poblacion[i][punto_mutacion] = random.randint(1, 100)
     return poblacion
 
+def comprobarMejorIndividuo(mejor_individuo):
+    return evaluarCromosoma(mejor_individuo) == 0
 
 def algoritmo_genetico():
     """
@@ -100,6 +102,8 @@ def algoritmo_genetico():
     """
     poblacion = primeraGeneracion()
     poblacion = ordenarPoblacion(poblacion)
+    # Si el mejor individuo es igual al código, se ha encontrado la solución
+    if comprobarMejorIndividuo(poblacion[0]): return poblacion[0] 
 
     for _ in range(MAX_ITERACIONES):
         poblacion = siguienteGeneracion(poblacion)
@@ -107,16 +111,19 @@ def algoritmo_genetico():
         poblacion = ordenarPoblacion(poblacion)
 
         # Si el mejor individuo es igual al código, se ha encontrado la solución
-        if evaluarCromosoma(poblacion[0]) == 0:
-            print("Código encontrado!")
-            print(poblacion[0])
-            return poblacion[0]
+        if comprobarMejorIndividuo(poblacion[0]): return True, poblacion[0] 
 
     # Si se llega al número máximo de iteraciones y no se ha encontrado la solución, se informa y se termina
-    print("Código no encontrado en las iteraciones máximas.")
-    return None
+    return False, None
 
 
 if __name__ == '__main__':
+
+    print('El código buscado es:', CODIGO, sep='\n')
+
     # Ejecutar el algoritmo genético
-    algoritmo_genetico()
+    encontrado, individuo = algoritmo_genetico()
+
+    if encontrado: print("\nCódigo encontrado!", individuo, sep='\n')
+    else: print("\nCódigo no encontrado en las iteraciones máximas.")
+
