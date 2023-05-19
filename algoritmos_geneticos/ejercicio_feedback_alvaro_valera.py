@@ -11,21 +11,45 @@ LON_CROMOSOMA = len(CODIGO)
 PROB_MUTACION = 0.1  # Probabilidad de mutación
 
 
-# Creación de la población inicial con cromosomas generados aleatoriamente
 def primeraGeneracion():
+    """
+    Función para generar la población inicial de cromosomas. Cada cromosoma es un vector de enteros 
+    generados aleatoriamente.
+
+    :return: lista de cromosomas (numpy arrays)
+    """
     return [np.random.randint(1, 100, LON_CROMOSOMA) for _ in range(ELEMENTOS_POBLACION)]
 
-# Cálculo del fitness de un cromosoma, se cuenta el número de dígitos que difieren del código objetivo
+
 def evaluarCromosoma(cromosoma):
+    """
+    Función para evaluar la aptitud de un cromosoma. La aptitud se calcula como la suma de las diferencias 
+    entre los genes del cromosoma y los del código objetivo.
+
+    :param cromosoma: Un array de numpy que representa un cromosoma.
+    :return: un entero que representa la aptitud del cromosoma.
+    """
     return np.sum(cromosoma != CODIGO)
 
-# Ordenar la población por su fitness (los individuos con menor fitness, es decir, más parecidos al código, primero)
+
 def ordenarPoblacion(poblacion):
+    """
+    Función para ordenar la población de cromosomas en orden ascendente de aptitud.
+
+    :param poblacion: Lista de cromosomas.
+    :return: La población ordenada.
+    """
     poblacion.sort(key=evaluarCromosoma)
     return poblacion
 
-# Creación de la siguiente generación a partir de la generación actual
+
 def siguienteGeneracion(poblacion):
+    """
+    Función para generar la próxima generación de cromosomas a partir de la población actual.
+
+    :param poblacion: Lista de cromosomas que representan la población actual.
+    :return: Nueva generación de cromosomas.
+    """
     nueva_generacion = []  # Lista para la nueva generación
     elite = poblacion[:ELEMENTOS_POBLACION // 10]  # Selección del 10% de los mejores individuos
     nueva_generacion.extend(elite)  # La élite pasa directamente a la siguiente generación
@@ -39,22 +63,41 @@ def siguienteGeneracion(poblacion):
 
     return nueva_generacion
 
-# Cruce de dos cromosomas, se toma una parte del padre y una del madre
+
 def cruzar(padre, madre):
+    """
+    Función para cruzar dos cromosomas. La descendencia se genera tomando la primera parte del padre 
+    y la segunda parte de la madre.
+
+    :param padre: Un array de numpy que representa un cromosoma.
+    :param madre: Un array de numpy que representa un cromosoma.
+    :return: Un nuevo cromosoma generado a partir de los cromosomas del padre y la madre.
+    """
     punto_cruce = random.randint(0, LON_CROMOSOMA)
     hijo = np.concatenate((padre[:punto_cruce], madre[punto_cruce:]))
     return hijo
 
-# Mutación de la población, con una probabilidad definida, un cromosoma puede mutar (cambiar un dígito aleatoriamente)
+
 def mutacion(poblacion):
+    """
+    Función para aplicar una mutación aleatoria a los cromosomas de la población.
+
+    :param poblacion: Lista de cromosomas.
+    :return: La población con cromosomas posiblemente mutados.
+    """
     for i in range(len(poblacion)):
         if random.random() < PROB_MUTACION:
             punto_mutacion = random.randint(0, LON_CROMOSOMA - 1)
             poblacion[i][punto_mutacion] = random.randint(1, 100)
     return poblacion
 
-# Algoritmo principal que controla el flujo del proceso evolutivo
+
 def algoritmo_genetico():
+    """
+    Función principal que controla el flujo del algoritmo genético. 
+
+    :return: El cromosoma que coincide con el código objetivo, o None si no se encuentra tal cromosoma después del número máximo de iteraciones.
+    """
     poblacion = primeraGeneracion()
     poblacion = ordenarPoblacion(poblacion)
 
