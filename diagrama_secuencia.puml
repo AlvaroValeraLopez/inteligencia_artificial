@@ -1,0 +1,27 @@
+@startuml
+
+actor Main
+
+Main -> algoritmo_genetico : Llamada
+
+algoritmo_genetico -> primeraGeneracion : Llamada
+primeraGeneracion -- algoritmo_genetico : Retorna población inicial
+
+' algoritmo_genetico -> ordenarPoblacion : Llamada
+' ordenarPoblacion -- algoritmo_genetico : Retorna población ordenada
+
+' algoritmo_genetico -> siguienteGeneracion : Llamada
+' siguienteGeneracion -> cruzar : Llamada
+' cruzar -- siguienteGeneracion : Retorna hijo
+' siguienteGeneracion -- algoritmo_genetico : Retorna nueva generación
+
+' algoritmo_genetico -> mutacion : Llamada
+' mutacion -- algoritmo_genetico : Retorna población con mutaciones
+
+' algoritmo_genetico -> ordenarPoblacion : Llamada
+' ordenarPoblacion -- algoritmo_genetico : Retorna población ordenada
+
+' algoritmo_genetico -> evaluarCromosoma : Llamada
+' evaluarCromosoma -- algoritmo_genetico : Retorna fitness del mejor individuo
+
+@enduml

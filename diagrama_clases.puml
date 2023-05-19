@@ -1,0 +1,19 @@
+@startuml
+
+class algoritmo_genetico {
+  + ELEMENTOS_POBLACION: int
+  + MAX_ITERACIONES: int
+  + NUM_GENES: int
+  + CODIGO: int[]
+  + LON_CROMOSOMA: int
+  + PROB_MUTACION: double
+  + primeraGeneracion() : List<int[]>
+  + evaluarCromosoma(cromosoma: int[]) : int
+  + ordenarPoblacion(poblacion: List<int[]>) : List<int[]>
+  + siguienteGeneracion(poblacion: List<int[]>) : List<int[]>
+  + cruzar(padre: int[], madre: int[]) : int[]
+  + mutacion(poblacion: List<int[]>) : List<int[]>
+  + algoritmo_genetico() : int[]
+}
+
+@enduml
