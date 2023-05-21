@@ -61,9 +61,39 @@ def graficar_resultados(resultados):
     plt.grid(True)  # Agregamos una cuadrícula al gráfico
     plt.show()
 
+def plot_value_bar(value):
+    fig, ax = plt.subplots()
+
+    # Configuración de los límites del eje x
+    ax.set_xlim(-max(abs(value), 1.0), max(abs(value), 1.0))
+
+    # Configuración de los límites del eje y
+    ax.set_ylim(-0.5, 0.5)
+
+    # Dibujar la línea en el 0
+    ax.axvline(0, color='black')
+
+    # Dibujar la barra de valor
+    if value > 0:
+        ax.barh(0, value, color='lightgreen', height=0.2)
+    elif value < 0:
+        ax.barh(0, value, color='red', height=0.2)
+
+    # Configuración de los ejes
+    ax.spines['left'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.yaxis.set_ticks([])
+
+    plt.show()
+
 if __name__ == '__main__':
-    n_pruebas = 10
-    resultados, tasa_exito, aptitudes = pruebas_algoritmo_genetico(n_pruebas)
-    graficar_resultados(resultados)
-    graficarExito(tasa_exito)
-    graficar_aptitudes(aptitudes)
+    # n_pruebas = 10
+    # resultados, tasa_exito, aptitudes = pruebas_algoritmo_genetico(n_pruebas)
+    # graficar_resultados(resultados)
+    # graficarExito(tasa_exito)
+    # graficar_aptitudes(aptitudes)
+    # Ejemplo de uso
+    valor = 2.5  # Puedes cambiar este valor para probar diferentes casos
+    plot_value_bar(valor)
