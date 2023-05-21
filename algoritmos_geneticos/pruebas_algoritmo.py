@@ -5,6 +5,11 @@ import numpy as np
 import time
 from algoritmo_genetico import AlgoritmoGenetico
 
+
+# Ruta de la carpeta de graficos.
+GRAFICO_DIR = 'graphs/'
+
+
 def graficar_exito(tasa_exito):
     """
     Esta función genera un gráfico de pastel que muestra la tasa de éxito de la ejecución del algoritmo genético.
@@ -19,6 +24,7 @@ def graficar_exito(tasa_exito):
     circulo_central = plt.Circle((0, 0), 0.6, color='white')
     ax.add_artist(circulo_central)
     ax.set_title('Tasa de éxito del algoritmo genético', fontsize=12)
+    plt.savefig('{}grafico_exito.png'.format(GRAFICO_DIR))
     plt.show()
 
 def graficar_aciertos(n_true, total):
@@ -42,6 +48,7 @@ def graficar_aciertos(n_true, total):
     plt.xlabel('Solución encontrada')
     plt.ylabel('Conteo')
     plt.grid(axis='y', alpha=0.5)
+    plt.savefig('{}grafico_aciertos.png'.format(GRAFICO_DIR))
     plt.show()
 
 def graficar_resultados(df):
@@ -57,6 +64,7 @@ def graficar_resultados(df):
     plt.ylabel('Tiempo (segundos)')
     plt.title('Tiempo de ejecución por prueba')
     plt.grid(True)
+    plt.savefig('{}grafico_resultados.png'.format(GRAFICO_DIR))
     plt.show()
 
 def graficar_fitness(valor):
@@ -74,6 +82,7 @@ def graficar_fitness(valor):
     ax.set_title('Valor promedio de Fitness para pruebas fallidas')
     for spine in ['left', 'right', 'top', 'bottom']:
         ax.spines[spine].set_visible(False)
+    plt.savefig('{}grafico_fitness.png'.format(GRAFICO_DIR))
     plt.show()
 
 def graficar_iteraciones(df):
@@ -90,6 +99,7 @@ def graficar_iteraciones(df):
     plt.ylabel('Frecuencia')
     plt.title('Distribución del número de iteraciones necesarias para encontrar la solución')
     plt.grid(axis='y')
+    plt.savefig('{}grafico_iteraciones.png'.format(GRAFICO_DIR))
     plt.show()
 
 def ejecutar_prueba():
