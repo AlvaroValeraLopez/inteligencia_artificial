@@ -5,20 +5,27 @@ class AlgoritmoGenetico:
     """
     Implementa un algoritmo genético simple para la búsqueda de un código genético específico.
     """
-    def __init__(self):
+    def __init__(self, elementos_poblacion=100, max_iteraciones=1000, num_genes=30, prob_mutacion=0.1):
         """
         Constructor de la clase AlgoritmoGenetico.
 
         Inicializa los parámetros del algoritmo genético, incluyendo el tamaño de la población,
         el número máximo de iteraciones, el número de genes, el código a encontrar,
         la longitud del cromosoma, y la probabilidad de mutación.
+
+        Args:
+            elementos_poblacion (int, optional): Tamaño de la población. Por defecto es 100.
+            max_iteraciones (int, optional): Número máximo de iteraciones. Por defecto es 1000.
+            num_genes (int, optional): Número de genes. Por defecto es 30.
+            prob_mutacion (float, optional): Probabilidad de mutación. Por defecto es 0.1.
         """
-        self.elementos_poblacion = 100
-        self.max_iteraciones = 1000
-        self.num_genes = 30
+        self.elementos_poblacion = elementos_poblacion
+        self.max_iteraciones = max_iteraciones
+        self.num_genes = num_genes
         self.codigo = np.random.randint(1, 100, self.num_genes)
         self.lon_cromosoma = len(self.codigo)
-        self.prob_mutacion = 0.1
+        self.prob_mutacion = prob_mutacion
+
 
     def primera_generacion(self):
         """
