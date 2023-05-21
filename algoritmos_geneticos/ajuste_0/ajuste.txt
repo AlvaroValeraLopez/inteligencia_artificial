@@ -1,0 +1,4 @@
+elementos_poblacion=100,
+max_iteraciones=1000,
+num_genes=30,
+prob_mutacion=0.1
