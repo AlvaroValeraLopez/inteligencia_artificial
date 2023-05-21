@@ -22,6 +22,30 @@ def graficar_exito(tasa_exito):
     ax.set_title('Tasa de éxito del algoritmo genético', fontsize=12)
     plt.show()
 
+def graficar_aciertos(n_true, total):
+    n_false = total - n_true
+
+    plt.figure(figsize=(8, 6))
+
+    colores = ['lightgreen', 'red']
+    valores = [n_true, n_false]
+    etiquetas = ['Encontrado', 'No encontrado']
+
+    sns.barplot(x=etiquetas, y=valores, palette=colores, alpha=0.6)
+
+    ax = plt.gca()
+    ax.set_axisbelow(True)  # Mover el eje y al fondo
+
+    for i, v in enumerate(valores):
+        ax.text(i, v + 0.5, str(v), ha='center')
+
+    plt.title('Resultados de la ejecución del algoritmo genético')
+    plt.xlabel('Solución encontrada')
+    plt.ylabel('Conteo')
+    plt.grid(axis='y', alpha=0.5)
+
+    plt.show()
+
 def graficar_resultados(df):
     plt.figure(figsize=(12, 6))
     sns.lineplot(data=df, y='Tiempo', x=df.index, marker='o', color='blue')
@@ -32,9 +56,7 @@ def graficar_resultados(df):
     plt.grid(True)
     plt.show()
 
-def graficar_fitness(df):
-    valor = df[df['Encontrado'] == False]['Fitness'].mean()
-
+def graficar_fitness(valor):
     fig, ax = plt.subplots(figsize=(5, 2))
     ax.barh([0], valor, color='lightgreen' if valor > 0 else 'red', 
             height=0.2, align='center', alpha=0.6)
@@ -107,9 +129,12 @@ def calcula_metricas(df):
 if __name__ == '__main__':
     
     n_pruebas = 100
-    resultados_pruebas = pruebas_algoritmo_genetico(n_pruebas)
 
-    graficar_exito(calcula_metricas(resultados_pruebas)[0])
+    resultados_pruebas = pruebas_algoritmo_genetico(n_pruebas)
+    tasa_acierto, media_fitness, media_iteraciones = calcula_metricas(resultados_pruebas)
+
+    graficar_exito(tasa_acierto)
+    graficar_aciertos(n_pruebas * tasa_acierto, n_pruebas)
     graficar_resultados(resultados_pruebas)
-    graficar_fitness(resultados_pruebas)
+    graficar_fitness(media_fitness)
     graficar_iteraciones(resultados_pruebas)
