@@ -9,7 +9,6 @@ class AlgoritmoGenetico:
         self.codigo = np.random.randint(1, 100, self.num_genes)
         self.lon_cromosoma = len(self.codigo)
         self.prob_mutacion = 0.1
-        self.mejores_aptitudes = [] # Lista para almacenar la aptitud del mejor individuo en cada generación
 
     def primera_generacion(self):
         return [np.random.randint(1, 100, self.lon_cromosoma) for _ in range(self.elementos_poblacion)]
@@ -50,12 +49,17 @@ class AlgoritmoGenetico:
     def ejecutar(self):
         poblacion = self.primera_generacion()
         poblacion = self.ordenar_poblacion(poblacion)
-        self.mejores_aptitudes.append(self.evaluar_cromosoma(poblacion[0])) # Agregamos la aptitud del mejor individuo de la primera generación
-        if self.comprobar_mejor_individuo(poblacion[0]): return True, poblacion[0], 0, self.mejores_aptitudes
+        
+        if self.comprobar_mejor_individuo(poblacion[0]):
+            return [True, 0, 0]
+        
         for i in range(self.max_iteraciones):
             poblacion = self.siguiente_generacion(poblacion)
             poblacion = self.mutacion(poblacion)
             poblacion = self.ordenar_poblacion(poblacion)
-            self.mejores_aptitudes.append(self.evaluar_cromosoma(poblacion[0])) # Agregamos la aptitud del mejor individuo de la nueva generación
-            if self.comprobar_mejor_individuo(poblacion[0]): return True, poblacion[0], i+1, self.mejores_aptitudes
-        return False, poblacion[0], self.max_iteraciones, self.mejores_aptitudes
+            
+            if self.comprobar_mejor_individuo(poblacion[0]):
+                return [True, 0, i+1]
+        
+        return [False, self.evaluar_cromosoma(poblacion[0]), self.max_iteraciones]
+
