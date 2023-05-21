@@ -48,6 +48,28 @@ def graficar_fitness(df):
         ax.spines[spine].set_visible(False)
     plt.show()
 
+def graficar_iteraciones(df):
+    plt.figure(figsize=(10, 6))
+
+    # Dibujar el histograma
+    sns.histplot(df[df['Encontrado'] == True]['Iteraciones'], bins=30, color='blue')
+
+    # Ajustar el orden de los elementos del gráfico
+    ax = plt.gca()
+    ax.set_axisbelow(True)  # Mover el eje y al fondo
+
+    # Configurar etiquetas y título
+    plt.xlabel('Número de iteraciones')
+    plt.ylabel('Frecuencia')
+    plt.title('Distribución del número de iteraciones necesarias para encontrar la solución')
+
+    # Mostrar el grid
+    plt.grid(axis='y')
+
+    # Mostrar el gráfico
+    plt.show()
+
+
 def ejecutar_prueba():
     inicio = time.time()
 
@@ -84,10 +106,10 @@ def calcula_metricas(df):
 
 if __name__ == '__main__':
     
-    n_pruebas = 10
+    n_pruebas = 100
     resultados_pruebas = pruebas_algoritmo_genetico(n_pruebas)
 
     graficar_exito(calcula_metricas(resultados_pruebas)[0])
     graficar_resultados(resultados_pruebas)
     graficar_fitness(resultados_pruebas)
-
+    graficar_iteraciones(resultados_pruebas)
