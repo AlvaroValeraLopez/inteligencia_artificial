@@ -74,17 +74,22 @@ def graficar_fitness(valor):
         valor (float): Valor promedio de Fitness para las pruebas fallidas.
     """
     fig, ax = plt.subplots(figsize=(5, 2))
-    ax.barh([0], valor, color='lightgreen' if valor > 0 else 'red', height=0.2, align='center', alpha=0.6)
+    bar = ax.barh([0], valor, color='lightgreen' if valor > 0 else 'red', 
+            height=0.2, align='center', alpha=0.6)
     ax.set_xlim(-max(abs(valor), 1.0), max(abs(valor), 1.0))
     ax.set_ylim(-0.5, 0.5)
     ax.axvline(0, color='black')
     ax.yaxis.set_ticks([])
     ax.set_title('Valor promedio de Fitness para pruebas fallidas')
+
     for spine in ['left', 'right', 'top', 'bottom']:
         ax.spines[spine].set_visible(False)
-    plt.savefig('{}grafico_fitness.png'.format(GRAFICO_DIR))
+    
+    # Aquí es donde se agrega el valor a la derecha de la barra.
+    # bar[0].get_width() nos da la longitud de la barra y bar[0].get_y() nos da la posición y de la barra.
+    ax.text(bar[0].get_width(), bar[0].get_y(), str(valor), va='center')
     plt.show()
-
+        
 def graficar_iteraciones(df):
     """
     Esta función genera un histograma que muestra la distribución del número de iteraciones necesarias para encontrar la solución.
@@ -138,6 +143,7 @@ def calcula_metricas(df):
     """
     tasa_acierto = df['Encontrado'].mean()
     media_fitness = df[df['Encontrado'] == False]['Fitness'].mean()
+    print(df[df['Encontrado'] == False]['Fitness'])
     media_iteraciones = df[df['Encontrado'] == True]['Iteraciones'].mean()
     return tasa_acierto, media_fitness, media_iteraciones
 
@@ -145,9 +151,10 @@ if __name__ == '__main__':
     """
     El punto de entrada del script. Realiza un número dado de pruebas del algoritmo genético, calcula varias métricas a partir de los resultados y genera gráficos para visualizar los resultados.
     """
-    n_pruebas = 100
+    n_pruebas = 5_00
     resultados_pruebas = pruebas_algoritmo_genetico(n_pruebas)
     tasa_acierto, media_fitness, media_iteraciones = calcula_metricas(resultados_pruebas)
+
     graficar_exito(tasa_acierto)
     graficar_aciertos(n_pruebas * tasa_acierto, n_pruebas)
     graficar_resultados(resultados_pruebas)

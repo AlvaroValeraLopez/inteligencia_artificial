@@ -5,7 +5,7 @@ class AlgoritmoGenetico:
     """
     Implementa un algoritmo genético simple para la búsqueda de un código genético específico.
     """
-    def __init__(self, elementos_poblacion=100, max_iteraciones=1000, num_genes=30, prob_mutacion=0.1):
+    def __init__(self, elementos_poblacion=200, max_iteraciones=2000, num_genes=60, prob_mutacion=0.4):
         """
         Constructor de la clase AlgoritmoGenetico.
 
